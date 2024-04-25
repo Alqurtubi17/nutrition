@@ -13,6 +13,34 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
+app.get('/bmi', (req, res) => {
+    res.render('bmi')
+})
+
+app.get('/materi-1', (req, res) => {
+    res.render('materi-1')
+})
+
+app.get('/materi-2', (req, res) => {
+    res.render('materi-2')
+})
+
+app.get('/materi-3', (req, res) => {
+    res.render('materi-3')
+})
+
+app.get('/materi-4', (req, res) => {
+    res.render('materi-4')
+})
+
+app.get('/about', (req, res) => {
+    res.render('about')
+})
+
+app.get('/contact', (req, res) => {
+    res.render('contact')
+})
+
 app.use(function(req, res) {
     res.status(400);
     res.render('404')

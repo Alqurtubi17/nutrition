@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 
 	<!-- title -->
-	<title>404!</title>
+	<title>Cek BMI</title>
 
 	<!-- favicon -->
 	<link rel="shortcut icon" type="image/png" href="/assets/img/logo.png">
@@ -29,9 +29,7 @@
 	<link rel="stylesheet" href="assets/css/main.css">
 	<!-- responsive -->
 	<link rel="stylesheet" href="assets/css/responsive.css">
-    <!-- aos-->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
 </head>
 <body>
 	
@@ -88,13 +86,32 @@
 	</div>
 	<!-- end header -->
 
-	<!-- breadcrumb-section -->
-	<div class="breadcrumb-section bg-404">
+	<!-- search area -->
+	<div class="search-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<span class="close-btn"><i class="fas fa-window-close"></i></span>
+					<div class="search-bar">
+						<div class="search-bar-tablecell">
+							<h3>Search For:</h3>
+							<input type="text" placeholder="Keywords">
+							<button type="submit">Search <i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end search arewa -->
+
+    <!-- breadcrumb-section -->
+	<div class="breadcrumb-section bmi-bg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 offset-lg-2 text-center">
 					<div class="breadcrumb-text">
-						<h1>404 - Not Found</h1>
+						<h1>HITUNG BERAT BADAN IDEALMU DISINI!</h1>
 					</div>
 				</div>
 			</div>
@@ -102,25 +119,14 @@
 	</div>
 	<!-- end breadcrumb section -->
 
-	<!-- error section -->
-	<div class="full-height-section error-section" s>
-		<div class="full-height-tablecell">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 offset-lg-2 text-center">
-						<div class="error-text">
-							<i class="far fa-sad-cry"></i>
-							<h1>Oops! Not Found.</h1>
-							<p>The page you requested for is not found.</p>
-							<a href="/" class="boxed-btn">Back to Home</a>
-						</div>
-					</div>
-				</div>
-			</div>
+    <!-- features list section -->
+	<div class="list-section pt-80 pb-60">
+		<div class="container">
+			<div class="yz-widget" data-calculator-type="bmi" data-language="en" data-unit-system="metric" data-background-color="#f5f5f5" data-text-color="#212121" data-primary-color="#769a29" data-alternate-background-color="#FFFFFF" data-alternate-text-color="#FFFFFF" data-secondary-color="#eab84b"><span class="yz-copyright">Powered by <a href="https://www.yazio.com/en/bmi-calculator">YAZIO</a></span></div>
 		</div>
 	</div>
-	<!-- end error section -->
-		
+	<!-- end features list section -->
+
 	<!-- footer -->
 	<div class="footer-area" style="padding-top: 10px; padding-bottom: 10px;">
 		<div class="container">
@@ -202,6 +208,53 @@
 	<script src="assets/js/sticker.js"></script>
 	<!-- main js -->
 	<script src="assets/js/main.js"></script>
-	
-	</body>
+    <!-- BMI -->
+    <script src="https://widget.yazio.com/calculator.js" async></script>
+    <script>
+        // Menanggapi event 'load' pada elemen window
+        window.addEventListener("load", function() {
+            // Mengambil elemen tombol "Calculate your BMI"
+            var calculateButton = document.querySelector(".yz-section-calculator .yz-calc-submit");
+            
+            // Memeriksa apakah tombol ditemukan
+            if (calculateButton) {
+                // Menambahkan event listener untuk menanggapi klik tombol
+                calculateButton.addEventListener("click", function() {
+                    // Mendapatkan elemen yang menampilkan klasifikasi BMI setelah perhitungan
+                    var bmiResultElement = document.getElementById("yz-bmi-result");
+
+                    // Memeriksa apakah elemen ditemukan dan memiliki teks
+                    if (bmiResultElement && bmiResultElement.innerText) {
+                        var bmiText = bmiResultElement.innerText;
+                        var bmiMatch = bmiText.match(/\d+(\.\d+)?/);
+
+                        // Memeriksa apakah pola cocok ditemukan
+                        if (bmiMatch && bmiMatch.length > 0) {
+                            var bmiValue = parseFloat(bmiMatch[0]);
+
+                            // Mengubah klasifikasi berdasarkan nilai BMI
+                            if (bmiValue < 18.5) {
+                                bmiResultElement.innerText = bmiText.replace("(overweight)", "(underweight)");
+                            } else if (bmiValue >= 18.5 && bmiValue < 23) {
+                                bmiResultElement.innerText = bmiText.replace("(overweight)", "(normal)");
+                            } else if (bmiValue >= 23 && bmiValue < 25) {
+                                bmiResultElement.innerText = bmiText.replace("(overweight)", "(overweight)");
+                            } else {
+                                bmiResultElement.innerText = bmiText.replace("(overweight)", "(obese)");
+                            }
+                        } else {
+                            console.error("BMI value not found in text:", bmiText);
+                        }
+                    } else {
+                        console.error("BMI result element not found or has no text.");
+                    }
+                });
+            } else {
+                console.error("Calculate button not found.");
+            }
+        });
+
+    </script>
+
+</body>
 </html>
