@@ -1,207 +1,299 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-
-	<!-- title -->
-	<title>404!</title>
-
-	<!-- favicon -->
-	<link rel="shortcut icon" type="image/png" href="/assets/img/logo.png">
-	<!-- google font -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-	<!-- fontawesome -->
-	<link rel="stylesheet" href="assets/css/all.min.css">
-	<!-- bootstrap -->
-	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-	<!-- owl carousel -->
-	<link rel="stylesheet" href="assets/css/owl.carousel.css">
-	<!-- magnific popup -->
-	<link rel="stylesheet" href="assets/css/magnific-popup.css">
-	<!-- animate css -->
-	<link rel="stylesheet" href="assets/css/animate.css">
-	<!-- mean menu css -->
-	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
-	<!-- main style -->
-	<link rel="stylesheet" href="assets/css/main.css">
-	<!-- responsive -->
-	<link rel="stylesheet" href="assets/css/responsive.css">
-    <!-- aos-->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-</head>
-<body>
-	
-	<!--PreLoader-->
-    <div class="loader">
-        <div class="loader-inner">
-            <div class="circle"></div>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Password Protected Page</title>
+    <style>
+        html, body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        #dialogText {
+            color: white;
+            background-color: #333333;
+        }
+        
+        #dialogWrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: table;
+            background-color: #EEEEEE;
+        }
+        
+        #dialogWrapCell {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        #mainDialog {
+            max-width: 400px;
+            margin: 5px;
+            border: solid #AAAAAA 1px;
+            border-radius: 10px;
+            box-shadow: 3px 3px 5px 3px #AAAAAA;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #FFFFFF;
+            overflow: hidden;
+            text-align: left;
+        }
+        #mainDialog > * {
+            padding: 10px 30px;
+        }
+        #passArea {
+            padding: 20px 30px;
+            background-color: white;
+        }
+        #passArea > * {
+            margin: 5px auto;
+        }
+        #pass {
+            width: 100%;
+            height: 40px;
+            font-size: 30px;
+        }
+        
+        #messageWrapper {
+            float: left;
+            vertical-align: middle;
+            line-height: 30px;
+        }
+        
+        .notifyText {
+            display: none;
+        }
+        
+        #invalidPass {
+            color: red;
+        }
+        
+        #success {
+            color: green;
+        }
+        
+        #submitPass {
+            font-size: 20px;
+            border-radius: 5px;
+            background-color: #E7E7E7;
+            border: solid gray 1px;
+            float: right;
+            cursor: pointer;
+        }
+        #contentFrame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #attribution {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+        #attribution, #attribution a {
+            color: #999;
+        }
+        .error {
+            display: none;
+            color: red;
+        }
+    </style>
+  </head>
+  <body>
+    <iframe id="contentFrame" frameBorder="0" allowfullscreen></iframe>
+    <div id="dialogWrap">
+        <div id="dialogWrapCell">
+            <div id="mainDialog">
+                <div id="dialogText">This page is password protected.</div>
+                <div id="passArea">
+                    <p id="passwordPrompt">Password</p>
+                    <input id="pass" type="password" name="pass" autofocus>
+                    <div>
+                        <span id="messageWrapper">
+                            <span id="invalidPass" class="error">Sorry, please try again.</span>
+                            <span id="trycatcherror" class="error">Sorry, something went wrong.</span>
+                            <span id="success" class="notifyText">Success!</span>
+                            &nbsp;
+                        </span>
+                        <button id="submitPass" type="button">Submit</button>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <div id="securecontext" class="error">
+                    <p>
+                        Sorry, but password protection only works over a secure connection. Please load this page via HTTPS.
+                    </p>
+                </div>
+                <div id="nocrypto" class="error">
+                    <p>
+                        Your web browser appears to be outdated. Please visit this page using a modern browser.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
-    <!--PreLoader Ends-->
-	
-	<!-- header -->
-	<div class="top-header-area" id="sticker" style="padding-bottom: 0px;">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 col-sm-12 text-center">
-					<div class="main-menu-wrap">
-						<!-- logo -->
-						<div class="site-logo">
-							<a href="/">
-								<img src="assets/img/logo-nutriform.png" alt="">
-							</a>
-						</div>
-						<!-- logo -->
+    <div id="attribution">
+        Protected by <a href="https://www.maxlaumeister.com/pagecrypt/">PageCrypt</a>
+    </div>
+    <script>
+    (function() {
 
-						<!-- menu start -->
-						<nav class="main-menu">
-							<ul>
-								<li><a href="/">Home</a></li>
-								<li><a href="#">Materi</a>
-									<ul class="sub-menu">
-										<li><a href="/materi-1">Gizi Seimbang</a></li>
-										<li><a href="/materi-2">Pedoman Gizi Seimbang I</a></li>
-										<li><a href="/materi-3">Pedoman Gizi Seimbang II</a></li>
-										<li><a href="/materi-4">Body Image</a></li>
-									</ul>
-								</li>
-								<li><a href="/about">About</a></li>
-								<li><a href="/contact">Contact</a></li>
-								<li>
-									<div class="header-icons">
-										
-									</div>
-								</li>
-							</ul>
-						</nav>
-						<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-						<div class="mobile-menu"></div>
-						<!-- menu end -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end header -->
+        var pl = "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";
+        
+        var submitPass = document.getElementById('submitPass');
+        var passEl = document.getElementById('pass');
+        var invalidPassEl = document.getElementById('invalidPass');
+        var trycatcherror = document.getElementById('trycatcherror');
+        var successEl = document.getElementById('success');
+        var contentFrame = document.getElementById('contentFrame');
+        
+        // Sanity checks
 
-    <!-- breadcrumb-section -->
-	<div class="breadcrumb-section materi-3-bg">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2 text-center">
-					<div class="breadcrumb-text">
-						<h1>PEDOMAN GIZI SEIMBANG</h1>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end breadcrumb section -->
+        if (pl === "") {
+            submitPass.disabled = true;
+            passEl.disabled = true;
+            alert("This page is meant to be used with the encryption tool. It doesn't work standalone.");
+            return;
+        }
 
-	<!-- error section -->
-	<div class="full-height-section error-section">
-		<div class="full-height-tablecell">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 offset-lg-2 text-center">
-						<div class="error-text">
-							<i class="far fa-sad-cry"></i>
-							<h1>Oops! Not Found.</h1>
-							<p>Materi Sedang Dipersiapkan.</p>
-							<a href="/" class="boxed-btn">Back to Home</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end error section -->
-		
-	<!-- footer -->
-	<div class="footer-area" style="padding-top: 10px; padding-bottom: 10px;">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-5 col-md-6">
-					<div class="footer-box about-widget">
-						<h2 class="widget-title">About us</h2>
-						<p>NutriForm adalah platform edukasi gizi yang berfokus pada peningkatan pengetahuan, pola makan, 
-							dan persepsi body image pada remaja putri. Kami menyediakan informasi yang mudah dipahami dan 
-							terpercaya untuk membantu remaja putri mencapai kesehatan fisik dan mental yang optimal.</p>
-					</div>
-				</div>
-				<div class="col-lg-5 col-md-6">
-					<div class="footer-box get-in-touch">
-						<h2 class="widget-title">Get in Touch</h2>
-						<ul>
-							<li>Fakultas Kesehatan Masyarakat, Kampus C UNAIR <br> Jl. Ir. Soekarno, Surabaya 60115</li>
-							<li>nutriform@gmail.com</li>
-							<li>+6287855388038</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-6">
-					<div class="footer-box pages">
-						<h2 class="widget-title">Pages</h2>
-						<ul>
-							<li><a href="/">Home</a></li>
-							<li><a href="/materi-1">Materi</a></li>
-							<li><a href="/about">About</a></li>
-							<li><a href="/contact">Contact</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end footer -->
-	
-	<!-- copyright -->
-	<div class="copyright">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6 col-md-12">
-					<p>Copyrights &copy; 2024 - NutriForm,  All Rights Reserved.<br>
-					</p>
-				</div>
-				<div class="col-lg-6 text-right col-md-12">
-					<div class="social-icons">
-						<ul>
-							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end copyright -->
-	
-	<!-- jquery -->
-	<script src="assets/js/jquery-1.11.3.min.js"></script>
-	<!-- bootstrap -->
-	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-	<!-- count down -->
-	<script src="assets/js/jquery.countdown.js"></script>
-	<!-- isotope -->
-	<script src="assets/js/jquery.isotope-3.0.6.min.js"></script>
-	<!-- waypoints -->
-	<script src="assets/js/waypoints.js"></script>
-	<!-- owl carousel -->
-	<script src="assets/js/owl.carousel.min.js"></script>
-	<!-- magnific popup -->
-	<script src="assets/js/jquery.magnific-popup.min.js"></script>
-	<!-- mean menu -->
-	<script src="assets/js/jquery.meanmenu.min.js"></script>
-	<!-- sticker js -->
-	<script src="assets/js/sticker.js"></script>
-	<!-- main js -->
-	<script src="assets/js/main.js"></script>
-	
-	</body>
+        if (!isSecureContext) {
+            document.querySelector("#passArea").style.display = "none";
+            document.querySelector("#securecontext").style.display = "block";
+            return;
+        }
+
+        if (!crypto.subtle) {
+            document.querySelector("#passArea").style.display = "none";
+            document.querySelector("#nocrypto").style.display = "block";
+            return;
+        }
+        
+        function str2ab(str) {
+            var ustr = atob(str);
+            var buf = new ArrayBuffer(ustr.length);
+            var bufView = new Uint8Array(buf);
+            for (var i=0, strLen=ustr.length; i < strLen; i++) {
+                bufView[i] = ustr.charCodeAt(i);
+            }
+            return bufView;
+        }
+
+        async function deriveKey(salt, password) {
+            const encoder = new TextEncoder()
+            const baseKey = await crypto.subtle.importKey(
+                'raw',
+                encoder.encode(password),
+                'PBKDF2',
+                false,
+                ['deriveKey'],
+            )
+            return await crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+                baseKey,
+                { name: 'AES-GCM', length: 256 },
+                true,
+                ['decrypt'],
+            )
+        }
+        
+        async function doSubmit(evt) {
+            submitPass.disabled = true;
+            passEl.disabled = true;
+
+            let iv, ciphertext, key;
+            
+            try {
+                var unencodedPl = str2ab(pl);
+
+                const salt = unencodedPl.slice(0, 32)
+                iv = unencodedPl.slice(32, 32 + 16)
+                ciphertext = unencodedPl.slice(32 + 16)
+
+                key = await deriveKey(salt, passEl.value);
+            } catch (e) {
+                trycatcherror.style.display = "inline";
+                console.error(e);
+                return;
+            }
+
+            try {
+                const decryptedArray = new Uint8Array(
+                    await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext)
+                );
+
+                let decrypted = new TextDecoder().decode(decryptedArray);
+
+                if (decrypted === "") throw "No data returned";
+
+                const basestr = '<base href="." target="_top">';
+                const anchorfixstr = `
+                    <script>
+                        Array.from(document.links).forEach((anchor) => {
+                            const href = anchor.getAttribute("href");
+                            if (href.startsWith("#")) {
+                                anchor.addEventListener("click", function(e) {
+                                    e.preventDefault();
+                                    const targetId = this.getAttribute("href").substring(1);
+                                    const targetEl = document.getElementById(targetId);
+                                    targetEl.scrollIntoView();
+                                });
+                            }
+                        });
+                    <\/script>
+                `;
+                
+                // Set default iframe link targets to _top so all links break out of the iframe
+                if (decrypted.includes("<head>")) decrypted = decrypted.replace("<head>", "<head>" + basestr);
+                else if (decrypted.includes("<!DOCTYPE html>")) decrypted = decrypted.replace("<!DOCTYPE html>", "<!DOCTYPE html>" + basestr);
+                else decrypted = basestr + decrypted;
+
+                // Fix fragment links
+                if (decrypted.includes("</body>")) decrypted = decrypted.replace("</body>", anchorfixstr + '</body>');
+                else if (decrypted.includes("</html>")) decrypted = decrypted.replace("</html>", anchorfixstr + '</html>');
+                else decrypted = decrypted + anchorfixstr;
+                
+                contentFrame.srcdoc = decrypted;
+                
+                successEl.style.display = "inline";
+                setTimeout(function() {
+                    dialogWrap.style.display = "none";
+                }, 1000);
+            } catch (e) {
+                invalidPassEl.style.display = "inline";
+                passEl.value = "";
+                submitPass.disabled = false;
+                passEl.disabled = false;
+                console.error(e);
+                return;
+            }
+        }
+        
+        submitPass.onclick = doSubmit;
+        passEl.onkeypress = function(e){
+            if (!e) e = window.event;
+            var keyCode = e.keyCode || e.which;
+            invalidPassEl.style.display = "none";
+            if (keyCode == '13'){
+              // Enter pressed
+              doSubmit();
+              return false;
+            }
+        }
+    })();
+    </script>
+  </body>
 </html>
