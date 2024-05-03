@@ -515,6 +515,10 @@ a.boxed-btn, a.bordered-btn, a.cart-btn {
   background-image: url(../img/product-img-1.jpg);
 }
 
+.materi-3-1-bg {
+  background-image: url(../img/materi-3-video.png);
+}
+
 .product-2-bg {
   background-image: url(../img/product-img-2.jpg);
 }
