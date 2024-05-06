@@ -58,6 +58,19 @@ app.get('/materi-4', (req, res) => {
     res.render('materi-4')
 })
 
+// Handle requests for specific HTML files inside the 'materi-4' folder
+app.get('/materi-4/:fileName', (req, res) => {
+    const fileName = req.params.fileName;
+    res.render(`materi-4/${fileName}`, (err, html) => {
+        if (err) {
+            console.error(err); // Menampilkan kesalahan jika terjadi kesalahan saat merender file
+            return res.status(500).send('Internal Server Error'); // Memberikan respons 500 jika terjadi kesalahan saat merender file
+        }
+        res.send(html); // Mengirimkan HTML jika berhasil
+    });
+});
+
+
 app.get('/about', (req, res) => {
     res.render('about')
 })
